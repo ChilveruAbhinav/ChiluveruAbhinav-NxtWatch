@@ -1,8 +1,21 @@
 import {Component} from 'react'
+
 import Cookies from 'js-cookie'
 import {Redirect} from 'react-router-dom'
 
-import './index.css'
+import {
+  LoginFormContainer,
+  Form,
+  LoginLogo,
+  InputContainer,
+  Label,
+  InputEl,
+  ShowPassword,
+  InputShow,
+  ShowLabel,
+  LoginButton,
+  ErrorPara,
+} from './StyledComponents'
 
 class LoginForm extends Component {
   state = {
@@ -69,58 +82,42 @@ class LoginForm extends Component {
     if (jwtToken !== undefined) {
       return <Redirect to="/" />
     }
-
+    console.log(errorMsg)
     return (
-      <div className="login-form-container">
-        <form className="form-container" onSubmit={this.submitForm}>
-          <img
+      <LoginFormContainer>
+        <Form onSubmit={this.submitForm}>
+          <LoginLogo
             src="https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-light-theme-img.png"
-            className="login-img"
             alt="website logo"
           />
-          <div className="input-container">
-            <label className="label-el" htmlFor="username">
-              USERNAME
-            </label>
-            <input
-              className="input-el"
+          <InputContainer>
+            <Label htmlFor="username">USERNAME</Label>
+            <InputEl
               type="text"
               id="username"
               value={username}
               placeholder="Username"
               onChange={this.onChangeUsername}
             />
-          </div>
-          <div className="input-container">
-            <label className="label-el" htmlFor="password">
-              PASSWORD
-            </label>
-            <input
-              className="input-el"
+          </InputContainer>
+          <InputContainer>
+            <Label htmlFor="password">PASSWORD</Label>
+            <InputEl
               type={showPassword ? 'text' : 'password'}
               id="password"
               placeholder="Password"
               value={password}
               onChange={this.onChangePassword}
             />
-          </div>
-          <div className="show-password-container">
-            <input
-              type="checkbox"
-              className="check-box"
-              id="check"
-              onClick={this.onClickShow}
-            />
-            <label htmlFor="check" className="show-password">
-              Show Password
-            </label>
-          </div>
-          <button type="submit" className="login-button">
-            Login
-          </button>
-          {showSubmitError && <p className="error-message">*{errorMsg}</p>}
-        </form>
-      </div>
+          </InputContainer>
+          <ShowPassword>
+            <InputShow type="checkbox" id="check" onClick={this.onClickShow} />
+            <ShowLabel htmlFor="check">Show Password</ShowLabel>
+          </ShowPassword>
+          <LoginButton type="submit">Login</LoginButton>
+          {showSubmitError && <ErrorPara>*{errorMsg}</ErrorPara>}
+        </Form>
+      </LoginFormContainer>
     )
   }
 }
